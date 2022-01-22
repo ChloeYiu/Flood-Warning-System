@@ -32,3 +32,18 @@ def stations_within_radius(stations, centre, r):
 		if distance<r:
 			output_list.append(station)
 	return output_list
+
+def rivers_with_station(stations):
+	output_set = set()
+	for station in stations:
+		output_set.add(station.river)
+	return output_set
+
+def stations_by_river(stations):
+	output_dict = dict()
+	for station in stations:
+		if station.river in output_dict:
+			output_dict[station.river].append(station)
+		else:
+			output_dict[station.river]=[station]
+	return output_dict
