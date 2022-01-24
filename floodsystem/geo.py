@@ -10,6 +10,7 @@ from .utils import sorted_by_key  # noqa
 from math import sqrt, asin, sin, cos, pi
 
 def great_circle_distance(coord1, coord2):
+	"""Takes in two tuples of lat/lon coords, and returns their great circle distance"""
 	lat1, lon1 = coord1
 	lat2, lon2 = coord2
 	lat1 = lat1/180*pi
@@ -19,6 +20,8 @@ def great_circle_distance(coord1, coord2):
 	return 6371*2*asin(sqrt((sin((lat1-lat2)/2))**2+cos(lat1)*cos(lat2)*(sin((lon1-lon2)/2))**2))
 
 def station_by_distance(stations, p):
+	"""Takes in a list of station objects, and a tuple of lat/lon coords
+	Returns a sorted list of stations with their corresponding distance from coord"""
 	output_list = []
 	for station in stations:
 		distance = great_circle_distance(station.coord, p)
@@ -26,6 +29,8 @@ def station_by_distance(stations, p):
 	return sorted(output_list, key=lambda x: x[1])
 
 def stations_within_radius(stations, centre, r):
+	"""Takes in a list of station objects, a tuple of lat/lon coords indicating the circle's centre, and a float indicating circle's radius
+	Returns a list of stations within the circle/radius defined"""
 	output_list = []
 	for station in stations:
 		distance = great_circle_distance(station.coord, centre)
@@ -34,12 +39,14 @@ def stations_within_radius(stations, centre, r):
 	return output_list
 
 def rivers_with_station(stations):
+	"""Takes in a list of station objects, returns a list of rivers with at least one station"""
 	output_set = set()
 	for station in stations:
 		output_set.add(station.river)
 	return output_set
 
 def stations_by_river(stations):
+	"""Takes in a list of station objects, returns a dictionary of rivers (keys) matched to a list of their corresponding stations (values)"""
 	output_dict = dict()
 	for station in stations:
 		if station.river in output_dict:
