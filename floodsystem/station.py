@@ -52,7 +52,19 @@ class MonitoringStation:
             return True
         else:
             return False
-    
+
+    def relative_water_level(self):
+
+        '''Takes in self (station object)
+        Returns a value from 0.0 to 1.0 describing the latest relative water level
+        Returns None when data is out of range or inconsistent
+        '''
+
+        if (not self.typical_range_consistent()) or (self.latest_level==None):
+            return None
+        return (self.latest_level-self.typical_range[0])/(self.typical_range[1]-self.typical_range[0])
+
+
 def inconsistent_typical_range_stations(stations):
 
     '''Takes in a list of station objects
