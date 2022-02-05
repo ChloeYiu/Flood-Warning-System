@@ -16,7 +16,8 @@ def run():
     stations = stations_highest_rel_level(stations, 5)
     for i in stations:
         station = i[0]
-        dates, levels = fetch_measure_levels(station.measure_id,dt=datetime.timedelta(days=10))
+        dt = 10
+        dates, levels = fetch_measure_levels(station.measure_id,dt=datetime.timedelta(days=dt))
         plot_water_levels(station, dates, levels)
 
 if __name__ == "__main__":
